@@ -1,10 +1,20 @@
 // Modules
-const {app, BrowserWindow} = require('electron')
+const {
+    app,
+    BrowserWindow,
+    ipcMain
+} = require('electron')
 const windowStateKeeper = require('electron-window-state')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+
+ipcMain.on('new-item', (e, itemUrl) => {
+  setTimeout(() => {
+    e.sender.send('new-item-success', 'New item from main process');
+  }, 2000)
+});
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow () {
@@ -20,7 +30,7 @@ function createWindow () {
     width: state.width,
     height: state.height,
     minWidth: 350,
-    maxWidth: 650,
+    //maxWidth: 650,
     minHeight: 300,
     webPreferences: {
       nodeIntegration: true
