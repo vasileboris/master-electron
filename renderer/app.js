@@ -8,6 +8,20 @@ let closeModal = document.getElementById('close-modal');
 let modal = document.getElementById('modal');
 let addItem = document.getElementById('add-item');
 let itemUrl = document.getElementById('url');
+let search = document.getElementById('search');
+
+search.addEventListener('keyup', e => {
+    Array.from(document.getElementsByClassName('read-item')).forEach(item => {
+        let hasMatch = item.innerText.toLowerCase().includes(search.value.toLowerCase());
+        item.style.display = hasMatch ? 'flex' : 'none';
+    })
+})
+
+document.addEventListener('keydown', e => {
+    if(e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        items.changeSelection(e.key);
+    }
+})
 
 const toggleModalButtons = () => {
     if(addItem.disabled) {
